@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <img src={logo} alt="SynclifySolutions" className="h-12 mb-4 logo-glow" />
+            <img src={logo} alt="SynclifySolutions" className="h-16 md:h-20 mb-4 logo-glow" />
             <p className="text-muted-foreground text-sm">
               Empowering businesses with cutting-edge software solutions.
             </p>
