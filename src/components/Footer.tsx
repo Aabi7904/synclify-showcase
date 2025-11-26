@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
+import logo from "@/assets/synclify-logo.png";
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold gradient-text mb-4">SynclifySolutions</h3>
+            <img src={logo} alt="SynclifySolutions" className="h-8 mb-4 logo-glow" />
             <p className="text-muted-foreground text-sm">
               Empowering businesses with cutting-edge software solutions.
             </p>
