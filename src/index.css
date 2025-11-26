@@ -113,4 +113,15 @@ All colors MUST be HSL.
     mask-composite: exclude;
     pointer-events: none;
   }
+
+  .logo-glow {
+    filter: drop-shadow(0 0 12px hsl(var(--primary) / 0.4)) 
+            drop-shadow(0 0 24px hsl(var(--primary) / 0.2));
+    transition: var(--transition-smooth);
+  }
+
+  .logo-glow:hover {
+    filter: drop-shadow(0 0 16px hsl(var(--primary) / 0.5)) 
+            drop-shadow(0 0 32px hsl(var(--primary) / 0.3));
+  }
 }
