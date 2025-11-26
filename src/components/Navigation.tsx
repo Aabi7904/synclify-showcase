@@ -20,10 +20,10 @@ const Navigation = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-2">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center">
-            <img src={logo} alt="SynclifySolutions" className="h-20 md:h-24 logo-glow" />
+            <img src={logo} alt="SynclifySolutions" className="h-14 md:h-16 logo-glow" />
           </Link>
 
           {/* Desktop Navigation */}
