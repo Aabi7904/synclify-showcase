@@ -1,8 +1,12 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 const Projects = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   const projects = [
     {
       title: "E-Commerce Platform",
@@ -67,10 +71,21 @@ const Projects = () => {
           {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="glass-hover rounded-2xl overflow-hidden group animate-fade-in"
+                className="glass-hover rounded-2xl overflow-hidden group animate-fade-in cursor-pointer"
                 style={{ animationDelay: `${index * 0.05}s` }}
+                onHoverStart={() => setHoveredIndex(index)}
+                onHoverEnd={() => setHoveredIndex(null)}
+                whileHover={{ 
+                  scale: 1.05,
+                  rotateY: hoveredIndex === index ? 5 : 0,
+                  rotateX: hoveredIndex === index ? -5 : 0,
+                  transition: { duration: 0.3 }
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
               >
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
@@ -112,7 +127,7 @@ const Projects = () => {
                     <ExternalLink className="w-4 h-4" />
                   </button>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
