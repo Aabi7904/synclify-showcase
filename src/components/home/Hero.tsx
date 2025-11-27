@@ -24,8 +24,8 @@ const Hero = () => {
 
       <motion.div className="container mx-auto px-4 relative z-10" style={{ opacity }}>
         <div className="text-center max-w-4xl mx-auto space-y-8 animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-4">
-            <Sparkles className="w-4 h-4 text-primary animate-glow-pulse" />
+          <div className="inline-flex items-center gap-2 lightning-border rounded-full mb-4">
+            <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-sm">Transforming Ideas into Digital Reality</span>
           </div>
 
