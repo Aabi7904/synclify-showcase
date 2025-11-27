@@ -108,27 +108,33 @@ All colors MUST be HSL.
     inset: -2px;
     border-radius: inherit;
     padding: 2px;
-    background: linear-gradient(90deg, 
-      hsl(180 85% 50%), 
-      hsl(180 85% 60%), 
-      hsl(180 85% 50%), 
-      hsl(180 85% 60%), 
-      hsl(180 85% 50%)
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 60deg,
+      hsl(180 85% 50%) 90deg,
+      hsl(180 85% 60%) 120deg,
+      hsl(180 85% 50%) 150deg,
+      transparent 180deg,
+      transparent 240deg,
+      hsl(180 85% 50%) 270deg,
+      hsl(180 85% 60%) 300deg,
+      hsl(180 85% 50%) 330deg,
+      transparent 360deg
     );
-    background-size: 200% 100%;
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    animation: lightning-flow 3s linear infinite;
+    animation: lightning-rotate 3s linear infinite;
     filter: drop-shadow(0 0 8px hsl(180 85% 50%));
   }
 
-  @keyframes lightning-flow {
+  @keyframes lightning-rotate {
     0% {
-      background-position: 0% 0%;
+      transform: rotate(0deg);
     }
     100% {
-      background-position: 200% 0%;
+      transform: rotate(360deg);
     }
   }
 
