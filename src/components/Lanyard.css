@@ -1,0 +1,23 @@
+.lanyard-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 300px;
+  height: 400px;
+  pointer-events: auto;
+  transform-origin: top left;
+}
+
+@media (max-width: 768px) {
+  .lanyard-wrapper {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .lanyard-wrapper {
+    width: 250px;
+    height: 350px;
+  }
+}
