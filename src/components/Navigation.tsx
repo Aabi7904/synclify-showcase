@@ -2,21 +2,55 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
+import StaggeredMenu from "./StaggeredMenu";
 import logo from "@/assets/synclify-logo.png";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Services", path: "/services" },
-    { name: "Projects", path: "/projects" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
+    { name: "Home", path: "/", ariaLabel: "Go to home page" },
+    { name: "Services", path: "/services", ariaLabel: "View our services" },
+    { name: "Projects", path: "/projects", ariaLabel: "See our projects" },
+    { name: "About", path: "/about", ariaLabel: "Learn about us" },
+    { name: "Contact", path: "/contact", ariaLabel: "Get in touch" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  // Mobile staggered menu
+  if (isMobile) {
+    const menuItems = navLinks.map(link => ({
+      label: link.name,
+      link: link.path,
+      ariaLabel: link.ariaLabel
+    }));
+
+    return (
+      <>
+        <nav className="fixed top-0 left-0 right-0 z-40 glass">
+          <div className="container mx-auto px-4 py-2">
+            <Link to="/" className="flex items-center">
+              <img src={logo} alt="SynclifySolutions" className="h-14 logo-glow" />
+            </Link>
+          </div>
+        </nav>
+        <StaggeredMenu
+          position="right"
+          items={menuItems}
+          logoUrl={logo}
+          menuButtonColor="hsl(180 85% 50%)"
+          openMenuButtonColor="hsl(0 0% 0%)"
+          accentColor="hsl(180 85% 50%)"
+          changeMenuColorOnOpen={true}
+          colors={['hsl(180 85% 15%)', 'hsl(180 85% 25%)']}
+        />
+      </>
+    );
+  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass">
