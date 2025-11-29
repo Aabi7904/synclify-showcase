@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import Shuffle from "@/components/Shuffle";
 
 const Projects = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -61,7 +62,22 @@ const Projects = () => {
           {/* Header */}
           <div className="text-center mb-16 animate-fade-in">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Our <span className="gradient-text">Projects</span>
+              <Shuffle
+                text="OUR PROJECTS"
+                tag="span"
+                shuffleDirection="right"
+                duration={0.4}
+                animationMode="evenodd"
+                shuffleTimes={2}
+                ease="power3.out"
+                stagger={0.04}
+                threshold={0.2}
+                triggerOnce={true}
+                triggerOnHover={false}
+                respectReducedMotion={true}
+                className="gradient-text"
+                style={{ fontSize: 'inherit', fontWeight: 'inherit' }}
+              />
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Showcasing our portfolio of successful projects across various industries and technologies
