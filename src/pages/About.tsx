@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Target, Users, Award, Lightbulb } from "lucide-react";
+import Shuffle from "@/components/Shuffle";
 
 const About = () => {
   const values = [
@@ -42,7 +43,22 @@ const About = () => {
           {/* Header */}
           <div className="text-center mb-16 animate-fade-in">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              About <span className="gradient-text">Us</span>
+              <Shuffle
+                text="ABOUT US"
+                tag="span"
+                shuffleDirection="right"
+                duration={0.4}
+                animationMode="evenodd"
+                shuffleTimes={2}
+                ease="power3.out"
+                stagger={0.04}
+                threshold={0.2}
+                triggerOnce={true}
+                triggerOnHover={false}
+                respectReducedMotion={true}
+                className="gradient-text"
+                style={{ fontSize: 'inherit', fontWeight: 'inherit' }}
+              />
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               We're a passionate team of innovators dedicated to transforming businesses through technology

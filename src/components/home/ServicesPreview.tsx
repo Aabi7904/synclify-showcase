@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Code, Smartphone, Layers, Receipt } from "lucide-react";
+import Shuffle from "@/components/Shuffle";
 
 const ServicesPreview = () => {
   const services = [
@@ -31,7 +32,22 @@ const ServicesPreview = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Our <span className="gradient-text">Services</span>
+            <Shuffle
+              text="OUR SERVICES"
+              tag="span"
+              shuffleDirection="right"
+              duration={0.4}
+              animationMode="evenodd"
+              shuffleTimes={2}
+              ease="power3.out"
+              stagger={0.04}
+              threshold={0.2}
+              triggerOnce={true}
+              triggerOnHover={false}
+              respectReducedMotion={true}
+              className="gradient-text"
+              style={{ fontSize: 'inherit', fontWeight: 'inherit' }}
+            />
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Comprehensive software solutions tailored to elevate your business
