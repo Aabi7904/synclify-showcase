@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-
+import ScrollVelocity from "../ScrollVelocity";
 const Hero = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -51,23 +51,13 @@ const Hero = () => {
             </Button>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-16">
-            {[
-              { number: "150+", label: "Projects Delivered" },
-              { number: "98%", label: "Client Satisfaction" },
-              { number: "50+", label: "Happy Clients" },
-              { number: "24/7", label: "Support Available" },
-            ].map((stat, index) => (
-              <div 
-                key={index} 
-                className="glass-hover rounded-lg p-6 animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="text-3xl font-bold gradient-text">{stat.number}</div>
-                <div className="text-sm text-muted-foreground mt-2">{stat.label}</div>
-              </div>
-            ))}
+          {/* Scroll Velocity Animation */}
+          <div className="pt-10 w-screen relative left-1/2 -translate-x-1/2">
+             <ScrollVelocity
+                texts={['Synclify Solutions • Your Digital Partner •', 'Innovate • Develop • Elevate •']} 
+                velocity={50} 
+                className="text-primary/30 font-['Dancing_Script'] text-2xl md:text-6xl"
+             />
           </div>
         </div>
       </motion.div>

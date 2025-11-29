@@ -31,7 +31,7 @@ const Navigation = () => {
 
     return (
       <>
-        <nav className="fixed top-0 left-0 right-0 z-40 glass">
+        <nav className="fixed top-0 left-0 right-0 z-40 glass shadow-none !border-0 border-none">
           <div className="container mx-auto px-4 py-2">
             <Link to="/" className="flex items-center">
               <img src={logo} alt="SynclifySolutions" className="h-14 logo-glow" />
@@ -53,7 +53,7 @@ const Navigation = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass shadow-none !border-0 border-none">
       <div className="container mx-auto px-4 py-2">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center">

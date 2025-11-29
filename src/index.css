@@ -5,6 +5,7 @@
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
 @layer base {
   :root {
@@ -125,16 +126,20 @@ All colors MUST be HSL.
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    animation: lightning-rotate 3s linear infinite;
+    animation: lightning-rotate 3s ease-in-out infinite;
     filter: drop-shadow(0 0 8px hsl(180 85% 50%));
   }
+  
 
   @keyframes lightning-rotate {
     0% {
       transform: rotate(0deg);
     }
+    60% {
+      transform: rotate(360deg); /* Finish spinning by 60% of the time */
+    }
     100% {
-      transform: rotate(360deg);
+      transform: rotate(360deg); /* Stay still (pause) for the remaining 40% */
     }
   }
 
