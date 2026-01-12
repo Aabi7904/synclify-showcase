@@ -2,159 +2,113 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { ArrowRight, ChefHat, Timer } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { Canvas } from "@react-three/fiber";
+import { Float, MeshDistortMaterial, OrbitControls, Sphere } from "@react-three/drei";
+
+// --- 3D Component: The "Mixing Dough" Orb ---
+const AnimatedIngredients = () => {
+  return (
+    <Canvas className="h-[400px] w-full" camera={{ position: [0, 0, 4] }}>
+      {/* Ambient Light for softness */}
+      <ambientLight intensity={0.5} />
+      {/* Directional Light for shadows/depth */}
+      <directionalLight position={[2, 5, 2]} intensity={1} />
+      
+      {/* Floating Controls - allows user to rotate the object */}
+      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={4} />
+
+      {/* The 3D Object */}
+      <Float speed={4} rotationIntensity={1} floatIntensity={2}>
+        <Sphere args={[1, 100, 100]} scale={1.8}>
+          <MeshDistortMaterial
+            color="#f59e0b" // Amber/Gold color (like honey or cooking)
+            attach="material"
+            distort={0.4} // Makes it wobble like liquid/dough
+            speed={2} // Speed of the wobble
+            roughness={0.2}
+            metalness={0.1}
+          />
+        </Sphere>
+      </Float>
+    </Canvas>
+  );
+};
 
 const Contact = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const [email, setEmail] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleNotify = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email) return;
+    
     toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
+      title: "You're on the list!",
+      description: "We'll serve you a notification when this page is ready.",
     });
-    setFormData({ name: "", email: "", subject: "", message: "" });
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setEmail("");
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col justify-between bg-background">
       <Navigation />
-      
-      <main className="pt-32 pb-20">
-        <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-16 animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Get In <span className="gradient-text">Touch</span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Ready to start your project? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Contact Info */}
-            <div className="space-y-6">
-              <div className="glass-hover rounded-xl p-6 space-y-4 animate-fade-in">
-                <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Email Us</h3>
-                  <p className="text-sm text-muted-foreground">info@synclifysolutions.com</p>
-                  <p className="text-sm text-muted-foreground">support@synclifysolutions.com</p>
-                </div>
-              </div>
+      <main className="flex-grow flex items-center justify-center pt-20 pb-20 overflow-hidden relative">
+        
+        {/* Background Decorative Elements */}
+        <div className="absolute top-1/4 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse" />
+        <div className="absolute bottom-1/4 right-10 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl -z-10 animate-pulse delay-700" />
 
-              <div className="glass-hover rounded-xl p-6 space-y-4 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-                <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
-                  <Phone className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Call Us</h3>
-                  <p className="text-sm text-muted-foreground">+1 (555) 123-4567</p>
-                  <p className="text-sm text-muted-foreground">Mon-Fri 9am-6pm EST</p>
-                </div>
-              </div>
-
-              <div className="glass-hover rounded-xl p-6 space-y-4 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-                <div className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center">
-                  <MapPin className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Visit Us</h3>
-                  <p className="text-sm text-muted-foreground">123 Tech Valley Drive</p>
-                  <p className="text-sm text-muted-foreground">Silicon Valley, CA 94025</p>
-                </div>
-              </div>
+        <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          
+          {/* Left Side: Text Content */}
+          <div className="text-center lg:text-left space-y-8 animate-fade-in z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20 mb-4">
+              <ChefHat className="w-5 h-5 animate-bounce" />
+              <span className="text-sm font-semibold">Under Maintenance</span>
             </div>
 
-            {/* Contact Form */}
-            <div className="lg:col-span-2">
-              <form onSubmit={handleSubmit} className="glass-hover rounded-xl p-8 space-y-6 animate-fade-in">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium">
-                      Full Name
-                    </label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="John Doe"
-                      required
-                      className="glass"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="text-sm font-medium">
-                      Email Address
-                    </label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="john@example.com"
-                      required
-                      className="glass"
-                    />
-                  </div>
-                </div>
+            <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+              We are <span className="gradient-text text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">Cooking</span> <br />
+              Something New.
+            </h1>
 
-                <div className="space-y-2">
-                  <label htmlFor="subject" className="text-sm font-medium">
-                    Subject
-                  </label>
-                  <Input
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    placeholder="Project inquiry"
-                    required
-                    className="glass"
-                  />
-                </div>
+            <p className="text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0">
+              Our chefs (developers) are busy upgrading this page with fresh ingredients. It will be ready to serve very soon!
+            </p>
 
-                <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">
-                    Message
-                  </label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tell us about your project..."
-                    rows={6}
-                    required
-                    className="glass resize-none"
-                  />
-                </div>
-
-                <Button type="submit" size="lg" className="w-full">
-                  <Send className="w-4 h-4 mr-2" />
-                  Send Message
+            {/* Notify Me Form */}
+            <div className="glass-hover p-2 rounded-xl max-w-md mx-auto lg:mx-0 border border-white/10 shadow-lg">
+              <form onSubmit={handleNotify} className="flex gap-2">
+                <Input
+                  type="email"
+                  placeholder="Enter your email for updates..."
+                  className="bg-transparent border-none focus-visible:ring-0"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Button type="submit" className="bg-amber-600 hover:bg-amber-700 text-white">
+                  Notify Me <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </form>
             </div>
+
+            {/* Estimated Time Badge */}
+            <div className="flex items-center justify-center lg:justify-start gap-3 text-sm text-muted-foreground pt-4">
+              <Timer className="w-4 h-4" />
+              <span>Estimated Return: Shortly</span>
+            </div>
           </div>
+
+          {/* Right Side: 3D Animation */}
+          <div className="relative h-[400px] w-full flex items-center justify-center animate-fade-in" style={{ animationDelay: "0.2s" }}>
+             {/* This calls the 3D component defined above */}
+             <AnimatedIngredients />
+          </div>
+
         </div>
       </main>
 

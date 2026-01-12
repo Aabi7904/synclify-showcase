@@ -1,128 +1,100 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Target, Users, Award, Lightbulb } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, Users, Timer } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { Canvas } from "@react-three/fiber";
+import { Float, MeshDistortMaterial, OrbitControls, Sphere } from "@react-three/drei";
+
+// --- 3D Component ---
+const AnimatedIngredients = () => {
+  return (
+    <Canvas className="h-[400px] w-full" camera={{ position: [0, 0, 4] }}>
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[2, 5, 2]} intensity={1} />
+      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={4} />
+      <Float speed={4} rotationIntensity={1} floatIntensity={2}>
+        <Sphere args={[1, 100, 100]} scale={1.8}>
+          <MeshDistortMaterial
+            color="#f59e0b"
+            attach="material"
+            distort={0.4}
+            speed={2}
+            roughness={0.2}
+            metalness={0.1}
+          />
+        </Sphere>
+      </Float>
+    </Canvas>
+  );
+};
 
 const About = () => {
-  const values = [
-    {
-      icon: Target,
-      title: "Mission-Driven",
-      description: "Empowering businesses through innovative software solutions that drive measurable results.",
-    },
-    {
-      icon: Users,
-      title: "Client-Focused",
-      description: "Building lasting partnerships by understanding and exceeding our clients' expectations.",
-    },
-    {
-      icon: Award,
-      title: "Excellence",
-      description: "Committed to delivering high-quality solutions with attention to every detail.",
-    },
-    {
-      icon: Lightbulb,
-      title: "Innovation",
-      description: "Staying ahead with cutting-edge technologies and creative problem-solving approaches.",
-    },
-  ];
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
 
-  const team = [
-    { name: "Alex Rivera", role: "Founder & CEO", expertise: "Full-Stack Development" },
-    { name: "Jordan Smith", role: "CTO", expertise: "Cloud Architecture" },
-    { name: "Taylor Johnson", role: "Lead Designer", expertise: "UX/UI Design" },
-    { name: "Casey Brown", role: "Project Manager", expertise: "Agile Management" },
-  ];
+  const handleNotify = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    toast({
+      title: "Signed Up!",
+      description: "We'll introduce you to the team soon.",
+    });
+    setEmail("");
+  };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col justify-between bg-background">
       <Navigation />
-      
-      <main className="pt-32 pb-20">
-        <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-16 animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              About <span className="gradient-text">Us</span>
+
+      <main className="flex-grow flex items-center justify-center pt-20 pb-20 overflow-hidden relative">
+        <div className="absolute top-1/4 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse" />
+        <div className="absolute bottom-1/4 right-10 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl -z-10 animate-pulse delay-700" />
+
+        <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          
+          <div className="text-center lg:text-left space-y-8 animate-fade-in z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20 mb-4">
+              <Users className="w-5 h-5 animate-bounce" />
+              <span className="text-sm font-semibold">Staff Only</span>
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+              The <span className="gradient-text text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">Kitchen</span> <br />
+              Crew is Busy.
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              We're a passionate team of innovators dedicated to transforming businesses through technology
+
+            <p className="text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0">
+              Our chefs are currently sharpening their knives and reorganizing the stations. We'll be ready to introduce the team shortly.
             </p>
-          </div>
 
-          {/* Company Story */}
-          <div className="glass-hover rounded-2xl p-12 mb-16 animate-fade-in">
-            <h2 className="text-3xl font-bold mb-6 gradient-text">Our Story</h2>
-            <div className="space-y-4 text-muted-foreground">
-              <p>
-                Founded in 2018, SynclifySolutions emerged from a simple belief: every business deserves 
-                access to world-class software solutions that drive growth and innovation. What started as 
-                a small team of developers has grown into a full-service software development company.
-              </p>
-              <p>
-                Today, we've delivered over 150 successful projects across diverse industries, from 
-                healthcare to retail, finance to education. Our commitment to excellence and client 
-                satisfaction has earned us a reputation as a trusted technology partner.
-              </p>
-              <p>
-                We don't just build software—we build relationships. Every project is an opportunity 
-                to understand your unique challenges and create solutions that make a real difference.
-              </p>
+            <div className="glass-hover p-2 rounded-xl max-w-md mx-auto lg:mx-0 border border-white/10 shadow-lg">
+              <form onSubmit={handleNotify} className="flex gap-2">
+                <Input
+                  type="email"
+                  placeholder="Notify me when About page is ready..."
+                  className="bg-transparent border-none focus-visible:ring-0"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Button type="submit" className="bg-amber-600 hover:bg-amber-700 text-white">
+                  Notify Me <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </form>
+            </div>
+
+            <div className="flex items-center justify-center lg:justify-start gap-3 text-sm text-muted-foreground pt-4">
+              <Timer className="w-4 h-4" />
+              <span>Status: Team Huddle in Progress</span>
             </div>
           </div>
 
-          {/* Values */}
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold mb-8 text-center">Our Values</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {values.map((value, index) => (
-                <div
-                  key={index}
-                  className="glass-hover rounded-xl p-6 text-center space-y-4 animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center mx-auto">
-                    <value.icon className="w-7 h-7 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-bold">{value.title}</h3>
-                  <p className="text-sm text-muted-foreground">{value.description}</p>
-                </div>
-              ))}
-            </div>
+          <div className="relative h-[400px] w-full flex items-center justify-center animate-fade-in" style={{ animationDelay: "0.2s" }}>
+             <AnimatedIngredients />
           </div>
 
-          {/* Team */}
-          <div>
-            <h2 className="text-3xl font-bold mb-8 text-center">Meet Our Team</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {team.map((member, index) => (
-                <div
-                  key={index}
-                  className="glass-hover rounded-xl p-6 text-center space-y-3 animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-accent mx-auto mb-4" />
-                  <h3 className="text-lg font-bold">{member.name}</h3>
-                  <p className="text-sm text-primary">{member.role}</p>
-                  <p className="text-xs text-muted-foreground">{member.expertise}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA */}
-          <div className="mt-20 glass-hover rounded-2xl p-12 text-center space-y-6 animate-fade-in">
-            <h2 className="text-3xl md:text-4xl font-bold">
-              Join Us on <span className="gradient-text">This Journey</span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Whether you're a startup or an established enterprise, we're here to help you succeed
-            </p>
-            <a href="/contact" className="inline-block">
-              <button className="glass-hover px-8 py-4 rounded-lg font-semibold text-lg hover:text-primary transition-colors">
-                Let's Work Together
-              </button>
-            </a>
-          </div>
         </div>
       </main>
 

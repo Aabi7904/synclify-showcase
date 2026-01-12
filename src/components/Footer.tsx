@@ -53,24 +53,24 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Contact Info 
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-sm">
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Mail size={16} className="text-primary" />
-                info@synclifysolutions.com
+                synclifysolutions@gmail.com
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <Phone size={16} className="text-primary" />
-                +1 (555) 123-4567
+              
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <MapPin size={16} className="text-primary" />
                 Tech Valley, CA
               </li>
             </ul>
-          </div>
+          </div>*/}
         </div>
 
         <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">

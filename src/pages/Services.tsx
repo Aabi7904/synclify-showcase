@@ -1,122 +1,100 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { Code, Smartphone, Layers, Receipt, Database, Cloud, Shield, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, Utensils, Timer } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { Canvas } from "@react-three/fiber";
+import { Float, MeshDistortMaterial, OrbitControls, Sphere } from "@react-three/drei";
+
+// --- 3D Component ---
+const AnimatedIngredients = () => {
+  return (
+    <Canvas className="h-[400px] w-full" camera={{ position: [0, 0, 4] }}>
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[2, 5, 2]} intensity={1} />
+      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={4} />
+      <Float speed={4} rotationIntensity={1} floatIntensity={2}>
+        <Sphere args={[1, 100, 100]} scale={1.8}>
+          <MeshDistortMaterial
+            color="#f59e0b"
+            attach="material"
+            distort={0.4}
+            speed={2}
+            roughness={0.2}
+            metalness={0.1}
+          />
+        </Sphere>
+      </Float>
+    </Canvas>
+  );
+};
 
 const Services = () => {
-  const services = [
-    {
-      icon: Code,
-      title: "Web Development",
-      description: "Creating stunning, responsive websites that captivate audiences and drive conversions.",
-      features: ["Custom Design", "E-commerce Solutions", "CMS Integration", "SEO Optimization"],
-    },
-    {
-      icon: Smartphone,
-      title: "Mobile App Development",
-      description: "Building native and cross-platform mobile applications for iOS and Android.",
-      features: ["Native Development", "React Native", "Flutter", "App Store Deployment"],
-    },
-    {
-      icon: Layers,
-      title: "Custom Software Solutions",
-      description: "Tailored software designed to address your unique business challenges and workflows.",
-      features: ["Business Automation", "System Integration", "Legacy Modernization", "API Development"],
-    },
-    {
-      icon: Receipt,
-      title: "Billing & Invoicing Software",
-      description: "Streamlined billing systems to manage finances, subscriptions, and payments efficiently.",
-      features: ["Automated Invoicing", "Payment Gateway Integration", "Subscription Management", "Financial Reports"],
-    },
-    {
-      icon: Database,
-      title: "Database Management",
-      description: "Robust database solutions for secure data storage, management, and analytics.",
-      features: ["Database Design", "Migration Services", "Performance Optimization", "Cloud Database"],
-    },
-    {
-      icon: Cloud,
-      title: "Cloud Solutions",
-      description: "Scalable cloud infrastructure and deployment solutions for modern applications.",
-      features: ["Cloud Migration", "AWS/Azure Setup", "DevOps Integration", "Scalability Planning"],
-    },
-    {
-      icon: Shield,
-      title: "Security & Compliance",
-      description: "Ensuring your software meets industry standards and protects against threats.",
-      features: ["Security Audits", "Compliance Standards", "Penetration Testing", "Data Encryption"],
-    },
-    {
-      icon: Zap,
-      title: "Performance Optimization",
-      description: "Optimizing existing applications for speed, efficiency, and better user experience.",
-      features: ["Code Optimization", "Load Time Reduction", "Database Tuning", "Caching Strategies"],
-    },
-  ];
+  const { toast } = useToast();
+  const [email, setEmail] = useState("");
+
+  const handleNotify = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    toast({
+      title: "Received!",
+      description: "We'll let you know when the new menu is out.",
+    });
+    setEmail("");
+  };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col justify-between bg-background">
       <Navigation />
-      
-      <main className="pt-32 pb-20">
-        <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-16 animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Our <span className="gradient-text">Services</span>
+
+      <main className="flex-grow flex items-center justify-center pt-20 pb-20 overflow-hidden relative">
+        <div className="absolute top-1/4 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse" />
+        <div className="absolute bottom-1/4 right-10 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl -z-10 animate-pulse delay-700" />
+
+        <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          
+          <div className="text-center lg:text-left space-y-8 animate-fade-in z-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20 mb-4">
+              <Utensils className="w-5 h-5 animate-bounce" />
+              <span className="text-sm font-semibold">New Menu</span>
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+              Refining Our <span className="gradient-text text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">Services</span> <br />
+              Menu.
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Comprehensive software solutions designed to transform your business and drive digital success
+
+            <p className="text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0">
+              We are updating our list of technical delicacies. From web development to custom software, the new offerings are being prepared.
             </p>
+
+            <div className="glass-hover p-2 rounded-xl max-w-md mx-auto lg:mx-0 border border-white/10 shadow-lg">
+              <form onSubmit={handleNotify} className="flex gap-2">
+                <Input
+                  type="email"
+                  placeholder="Notify me for services..."
+                  className="bg-transparent border-none focus-visible:ring-0"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Button type="submit" className="bg-amber-600 hover:bg-amber-700 text-white">
+                  Notify Me <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </form>
+            </div>
+
+            <div className="flex items-center justify-center lg:justify-start gap-3 text-sm text-muted-foreground pt-4">
+              <Timer className="w-4 h-4" />
+              <span>Status: Taste Testing</span>
+            </div>
           </div>
 
-          {/* Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="glass-hover rounded-2xl p-8 space-y-6 animate-fade-in"
-                style={{ animationDelay: `${index * 0.05}s` }}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
-                    <service.icon className="w-7 h-7 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
-                    <p className="text-muted-foreground">{service.description}</p>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-border">
-                  <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-primary">Key Features</h4>
-                  <ul className="grid grid-cols-2 gap-2">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+          <div className="relative h-[400px] w-full flex items-center justify-center animate-fade-in" style={{ animationDelay: "0.2s" }}>
+             <AnimatedIngredients />
           </div>
 
-          {/* CTA Section */}
-          <div className="mt-20 glass-hover rounded-2xl p-12 text-center space-y-6 animate-fade-in">
-            <h2 className="text-3xl md:text-4xl font-bold">
-              Ready to Start Your <span className="gradient-text">Project?</span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Let's discuss how our services can help transform your business vision into reality
-            </p>
-            <a href="/contact" className="inline-block">
-              <button className="glass-hover px-8 py-4 rounded-lg font-semibold text-lg hover:text-primary transition-colors">
-                Get in Touch
-              </button>
-            </a>
-          </div>
         </div>
       </main>
 
